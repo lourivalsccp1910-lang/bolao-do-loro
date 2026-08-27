@@ -129,7 +129,12 @@ export function getRanking(): RankingSummary {
         return b.exactScores - a.exactScores;
       }
 
-      // 3º critério: primeiro palpite enviado
+      // 3º critério: maior número de resultados parciais
+      if (b.partialScores !== a.partialScores) {
+        return b.partialScores - a.partialScores;
+      }
+
+      // 4º critério: primeiro palpite enviado
       if (
         a.firstPredictionAt !== null &&
         b.firstPredictionAt !== null
@@ -164,3 +169,4 @@ export function getRanking(): RankingSummary {
     entries,
   };
 }
+
