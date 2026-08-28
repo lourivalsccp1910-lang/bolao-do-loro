@@ -1,5 +1,6 @@
-import {
+﻿import {
   Box,
+  Drawer,
   List,
   ListItemButton,
   ListItemIcon,
@@ -57,14 +58,19 @@ const menu = [
   },
 ];
 
-export default function Sidebar() {
+interface Props {
+  mobile?: boolean;
+  open?: boolean;
+  onClose?: () => void;
+}
+
+function MenuContent({ onClose }: { onClose?: () => void }) {
   return (
     <Box
       sx={{
         width: 260,
         backgroundColor: "#ffffff",
-        borderRight: "1px solid #e0e0e0",
-        minHeight: "calc(100vh - 64px)",
+        minHeight: "100%",
       }}
     >
       <Typography
@@ -83,6 +89,7 @@ export default function Sidebar() {
             key={item.text}
             component={Link}
             to={item.path}
+            onClick={onClose}
           >
             <ListItemIcon>
               {item.icon}
@@ -92,6 +99,38 @@ export default function Sidebar() {
           </ListItemButton>
         ))}
       </List>
+    </Box>
+  );
+}
+
+export default function Sidebar({
+  mobile = false,
+  open = false,
+  onClose,
+}: Props) {
+  if (mobile) {
+    return (
+      <Drawer
+        anchor="left"
+        open={open}
+        onClose={onClose}
+      >
+        <MenuContent onClose={onClose} />
+      </Drawer>
+    );
+  }
+
+  return (
+    <Box
+      sx={{
+        width: 260,
+        flexShrink: 0,
+        backgroundColor: "#ffffff",
+        borderRight: "1px solid #e0e0e0",
+        minHeight: "calc(100vh - 64px)",
+      }}
+    >
+      <MenuContent />
     </Box>
   );
 }

@@ -1,15 +1,38 @@
-import {
+﻿import {
   AppBar,
   Avatar,
   Box,
+  IconButton,
   Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
-export default function Header() {
+interface Props {
+  onMenuClick?: () => void;
+}
+
+export default function Header({ onMenuClick }: Props) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
     <AppBar position="static" elevation={1}>
       <Toolbar>
+
+        {isMobile && (
+          <IconButton
+            color="inherit"
+            edge="start"
+            onClick={onMenuClick}
+            sx={{ mr: 1 }}
+            aria-label="Abrir menu"
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
 
         <Avatar
           sx={{

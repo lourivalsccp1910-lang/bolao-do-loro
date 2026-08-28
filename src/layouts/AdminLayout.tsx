@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+﻿import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { useState } from "react";
 
 import Header from "../components/layout/Header";
 import Sidebar from "../components/layout/Sidebar";
@@ -9,6 +10,10 @@ interface Props {
 }
 
 export default function AdminLayout({ children }: Props) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <Box
       sx={{
@@ -16,14 +21,24 @@ export default function AdminLayout({ children }: Props) {
         backgroundColor: "#f5f5f5",
       }}
     >
-      <Header />
+      <Header
+        onMenuClick={() => setMobileMenuOpen(true)}
+      />
 
       <Box
         sx={{
           display: "flex",
         }}
       >
-        <Sidebar />
+        {isMobile ? (
+          <Sidebar
+            mobile
+            open={mobileMenuOpen}
+            onClose={() => setMobileMenuOpen(false)}
+          />
+        ) : (
+          <Sidebar />
+        )}
 
         <Content>{children}</Content>
       </Box>
