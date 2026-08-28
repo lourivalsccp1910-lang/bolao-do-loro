@@ -26,7 +26,7 @@ Sprint 1
 
 Status:
 
-🟡 Em Desenvolvimento
+🟡 Em Validação
 
 ---
 
@@ -44,16 +44,16 @@ Construir a base definitiva do projeto.
 
 ### Entregas
 
-- [ ] Estrutura definitiva
-- [ ] Dashboard
-- [ ] Header
-- [ ] Sidebar
+- [x] Estrutura definitiva
+- [x] Dashboard
+- [x] Header
+- [x] Sidebar
 - [ ] Área Principal
 - [ ] Layout Responsivo
-- [ ] Navegação
+- [x] Navegação
 - [ ] Tema Visual
-- [ ] Sem erros de import/export
-- [ ] Projeto compilando
+- [x] Sem erros de import/export
+- [x] Projeto compilando
 
 Resultado esperado
 
@@ -61,7 +61,7 @@ Abrir o navegador e visualizar o Dashboard do Bolão do Loro.
 
 Status
 
-🟡 Em desenvolvimento
+🟡 Em validação
 
 ---
 
@@ -217,7 +217,7 @@ Primeira versão completa.
 
 Entregas
 
-- [ ] Dashboard
+- [x] Dashboard
 - [ ] Participantes
 - [ ] Campeonatos
 - [ ] Jogos
@@ -283,4 +283,4 @@ ROADMAP.md criado.
 
 Última atualização:
 
-05/08/2026
+27/08/2026
