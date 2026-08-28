@@ -217,7 +217,7 @@ Primeira versão completa.
 
 Entregas
 
-- [x] Dashboard
+- [ ] Dashboard
 - [ ] Participantes
 - [ ] Campeonatos
 - [ ] Jogos
