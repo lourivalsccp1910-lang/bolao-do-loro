@@ -1,4 +1,4 @@
-# ROADMAP.md
+﻿# ROADMAP.md
 
 # Bolão do Loro
 
@@ -18,15 +18,15 @@ Projeto iniciado
 
 Versão Atual:
 
-Release 0.3
+Release 0.4
 
 Sprint Atual:
 
-Sprint 1
+Sprint 2
 
 Status:
 
-🟡 Em Validação
+🟢 Concluída
 
 ---
 
@@ -48,8 +48,8 @@ Construir a base definitiva do projeto.
 - [x] Dashboard
 - [x] Header
 - [x] Sidebar
-- [ ] Área Principal
-- [ ] Layout Responsivo
+- [x] Área Principal
+- [x] Layout Responsivo
 - [x] Navegação
 - [ ] Tema Visual
 - [x] Sem erros de import/export
@@ -61,7 +61,7 @@ Abrir o navegador e visualizar o Dashboard do Bolão do Loro.
 
 Status
 
-🟡 Em validação
+🟢 Concluída
 
 ---
 
@@ -75,18 +75,18 @@ Objetivo
 
 Criar o módulo completo de participantes.
 
-Entregas
+### Entregas
 
-- [ ] Cadastro
-- [ ] Alteração
-- [ ] Exclusão
-- [ ] Pesquisa
-- [ ] Paginação
-- [ ] Validação
+- [x] Cadastro
+- [x] Alteração
+- [x] Exclusão
+- [x] Pesquisa
+- [x] Paginação
+- [x] Validação
 
 Status
 
-⚪ Não iniciado
+🟢 Concluída
 
 ---
 
@@ -100,7 +100,7 @@ Objetivo
 
 Cadastrar todos os campeonatos.
 
-Entregas
+### Entregas
 
 - [ ] Cadastro
 - [ ] Alteração
@@ -124,7 +124,7 @@ Objetivo
 
 Cadastrar jogos.
 
-Entregas
+### Entregas
 
 - [ ] Cadastro
 - [ ] Datas
@@ -148,7 +148,7 @@ Objetivo
 
 Permitir lançamento dos palpites.
 
-Entregas
+### Entregas
 
 - [ ] Cadastro
 - [ ] Alteração
@@ -171,7 +171,7 @@ Objetivo
 
 Criar classificação automática.
 
-Entregas
+### Entregas
 
 - [ ] Pontuação
 - [ ] Critérios de desempate
@@ -194,7 +194,7 @@ Objetivo
 
 Controlar pagamentos.
 
-Entregas
+### Entregas
 
 - [ ] Recebimentos
 - [ ] Pendências
@@ -209,13 +209,13 @@ Status
 
 ## Release 1.0
 
-Sistema Operacional
+### Sistema Operacional
 
 Objetivo
 
 Primeira versão completa.
 
-Entregas
+### Entregas
 
 - [ ] Dashboard
 - [ ] Participantes
@@ -240,7 +240,6 @@ Status
 Aplicativo Mobile
 
 - Android
-
 - iPhone
 
 ---
@@ -281,6 +280,14 @@ ROADMAP.md criado.
 
 ---
 
+## Release 0.4
+
+Sprint 2 — Participantes.
+
+Cadastro, alteração, exclusão, pesquisa, validação e paginação concluídos e validados.
+
+---
+
 Última atualização:
 
-27/08/2026
+28/08/2026
