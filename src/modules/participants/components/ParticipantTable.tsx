@@ -1,3 +1,4 @@
+﻿import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -8,6 +9,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
   Typography,
@@ -30,6 +32,9 @@ export default function ParticipantTable({
   onEdit,
   onDelete,
 }: Props) {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
   const filteredParticipants = participants.filter(
     (participant) => {
       const term = search.toLowerCase();
@@ -42,6 +47,29 @@ export default function ParticipantTable({
       );
     }
   );
+
+  useEffect(() => {
+    setPage(0);
+  }, [search]);
+
+  const paginatedParticipants = filteredParticipants.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+
+  function handleChangePage(
+    _event: unknown,
+    newPage: number
+  ) {
+    setPage(newPage);
+  }
+
+  function handleChangeRowsPerPage(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  }
 
   return (
     <Stack spacing={2}>
@@ -93,7 +121,7 @@ export default function ParticipantTable({
                 </TableCell>
               </TableRow>
             ) : (
-              filteredParticipants.map((participant) => (
+              paginatedParticipants.map((participant) => (
                 <TableRow key={participant.id}>
                   <TableCell>
                     {participant.name}
@@ -144,6 +172,20 @@ export default function ParticipantTable({
             )}
           </TableBody>
         </Table>
+
+        <TablePagination
+          component="div"
+          count={filteredParticipants.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          rowsPerPageOptions={[10, 25, 50]}
+          labelRowsPerPage="Participantes por página:"
+          labelDisplayedRows={({ from, to, count }) =>
+            `${from}-${to} de ${count !== -1 ? count : `mais de ${to}`}`
+          }
+        />
       </TableContainer>
     </Stack>
   );
