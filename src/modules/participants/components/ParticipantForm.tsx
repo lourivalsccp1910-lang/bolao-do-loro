@@ -18,12 +18,49 @@ interface Props {
   onCancel?: () => void;
 }
 
+interface FormErrors {
+  name?: string;
+  phone?: string;
+  email?: string;
+  cpf?: string;
+}
+
 const emptyForm: ParticipantFormData = {
   name: "",
   phone: "",
   email: "",
   cpf: "",
 };
+
+function validateForm(form: ParticipantFormData): FormErrors {
+  const errors: FormErrors = {};
+
+  if (!form.name.trim()) {
+    errors.name = "Informe o nome completo.";
+  }
+
+  const phoneDigits = form.phone.replace(/\D/g, "");
+
+  if (form.phone.trim() && phoneDigits.length < 10) {
+    errors.phone = "Informe um telefone válido.";
+  }
+
+  if (form.email.trim()) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(form.email.trim())) {
+      errors.email = "Informe um e-mail válido.";
+    }
+  }
+
+  const cpfDigits = form.cpf.replace(/\D/g, "");
+
+  if (form.cpf.trim() && cpfDigits.length !== 11) {
+    errors.cpf = "Informe um CPF válido.";
+  }
+
+  return errors;
+}
 
 export default function ParticipantForm({
   participant,
@@ -32,6 +69,8 @@ export default function ParticipantForm({
 }: Props) {
   const [form, setForm] =
     useState<ParticipantFormData>(emptyForm);
+
+  const [errors, setErrors] = useState<FormErrors>({});
 
   useEffect(() => {
     if (participant) {
@@ -44,6 +83,8 @@ export default function ParticipantForm({
     } else {
       setForm(emptyForm);
     }
+
+    setErrors({});
   }, [participant]);
 
   function handleChange(
@@ -54,6 +95,11 @@ export default function ParticipantForm({
       ...current,
       [field]: value,
     }));
+
+    setErrors((current) => ({
+      ...current,
+      [field]: undefined,
+    }));
   }
 
   function handleSubmit(
@@ -61,19 +107,29 @@ export default function ParticipantForm({
   ) {
     event.preventDefault();
 
-    if (!form.name.trim()) {
+    const validationErrors = validateForm(form);
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
       return;
     }
 
-    onSubmit(form);
+    onSubmit({
+      name: form.name.trim(),
+      phone: form.phone.trim(),
+      email: form.email.trim(),
+      cpf: form.cpf.trim(),
+    });
 
     if (!participant) {
       setForm(emptyForm);
+      setErrors({});
     }
   }
 
   return (
-    <Box component="form" onSubmit={handleSubmit}>
+    <Box component="form" onSubmit={handleSubmit} noValidate>
       <Stack spacing={2}>
         <Typography variant="h6">
           {participant
@@ -87,6 +143,8 @@ export default function ParticipantForm({
           onChange={(event) =>
             handleChange("name", event.target.value)
           }
+          error={Boolean(errors.name)}
+          helperText={errors.name}
           required
           fullWidth
         />
@@ -97,6 +155,8 @@ export default function ParticipantForm({
           onChange={(event) =>
             handleChange("phone", event.target.value)
           }
+          error={Boolean(errors.phone)}
+          helperText={errors.phone}
           fullWidth
         />
 
@@ -107,6 +167,8 @@ export default function ParticipantForm({
           onChange={(event) =>
             handleChange("email", event.target.value)
           }
+          error={Boolean(errors.email)}
+          helperText={errors.email}
           fullWidth
         />
 
@@ -116,6 +178,8 @@ export default function ParticipantForm({
           onChange={(event) =>
             handleChange("cpf", event.target.value)
           }
+          error={Boolean(errors.cpf)}
+          helperText={errors.cpf}
           fullWidth
         />
 
