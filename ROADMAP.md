@@ -18,11 +18,11 @@ Projeto iniciado
 
 Versão Atual:
 
-Release 0.4
+Release 0.5
 
 Sprint Atual:
 
-Sprint 2
+Sprint 3
 
 Status:
 
@@ -102,15 +102,15 @@ Cadastrar todos os campeonatos.
 
 ### Entregas
 
-- [ ] Cadastro
-- [ ] Alteração
-- [ ] Exclusão
-- [ ] Status
-- [ ] Datas
+- [x] Cadastro
+- [x] Alteração
+- [x] Exclusão
+- [x] Status
+- [x] Datas
 
 Status
 
-⚪ Não iniciado
+🟢 Concluída
 
 ---
 
@@ -288,6 +288,17 @@ Cadastro, alteração, exclusão, pesquisa, validação e paginação concluído
 
 ---
 
+## Release 0.5
+
+Sprint 3 — Campeonatos.
+
+Cadastro, alteração, exclusão, status e datas concluídos e validados.
+
+---
+
 Última atualização:
 
-28/08/2026
+29/08/2026
+
+
+
