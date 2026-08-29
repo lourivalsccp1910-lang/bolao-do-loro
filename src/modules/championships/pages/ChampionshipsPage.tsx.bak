@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -22,7 +22,6 @@ import {
 import type {
   Championship,
   ChampionshipFormData,
-  ChampionshipStatus,
   ChampionshipType,
 } from "../types/championship.types";
 
@@ -30,9 +29,6 @@ const emptyForm: ChampionshipFormData = {
   name: "",
   type: "LOTECA",
   description: "",
-  status: "AGENDADO",
-  startDate: "",
-  endDate: "",
 };
 
 const typeLabels: Record<ChampionshipType, string> = {
@@ -40,12 +36,6 @@ const typeLabels: Record<ChampionshipType, string> = {
   PLACARES: "Placares",
   CLASSIFICACAO: "Classificação",
   MATA_MATA: "Mata-mata",
-};
-
-const statusLabels: Record<ChampionshipStatus, string> = {
-  AGENDADO: "Agendado",
-  EM_ANDAMENTO: "Em andamento",
-  ENCERRADO: "Encerrado",
 };
 
 export default function ChampionshipsPage() {
@@ -73,31 +63,10 @@ export default function ChampionshipsPage() {
       return;
     }
 
-    if (!form.startDate) {
-      alert("Informe a data de início.");
-      return;
-    }
-
-    if (!form.endDate) {
-      alert("Informe a data de encerramento.");
-      return;
-    }
-
-    if (form.endDate < form.startDate) {
-      alert("A data de encerramento não pode ser anterior à data de início.");
-      return;
-    }
-
     if (editingId) {
-      updateChampionship(editingId, {
-        ...form,
-        name: form.name.trim(),
-      });
+      updateChampionship(editingId, form);
     } else {
-      createChampionship({
-        ...form,
-        name: form.name.trim(),
-      });
+      createChampionship(form);
     }
 
     setChampionships(listChampionships());
@@ -112,23 +81,12 @@ export default function ChampionshipsPage() {
       name: championship.name,
       type: championship.type,
       description: championship.description,
-      status: championship.status,
-      startDate: championship.startDate,
-      endDate: championship.endDate,
     });
   }
 
   function handleDelete(id: string) {
-    const championship = championships.find(
-      (item) => item.id === id
-    );
-
-    if (!championship) {
-      return;
-    }
-
     const confirmed = window.confirm(
-      `Deseja realmente excluir o campeonato "${championship.name}"?`
+      "Deseja realmente excluir este campeonato?"
     );
 
     if (!confirmed) {
@@ -147,16 +105,6 @@ export default function ChampionshipsPage() {
   function handleCancelEdit() {
     setEditingId(null);
     setForm(emptyForm);
-  }
-
-  function formatDate(date: string) {
-    if (!date) {
-      return "-";
-    }
-
-    const [year, month, day] = date.split("-");
-
-    return `${day}/${month}/${year}`;
   }
 
   return (
@@ -241,68 +189,6 @@ export default function ChampionshipsPage() {
                 </Select>
               </FormControl>
 
-              <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel id="championship-status-label">
-                  Status
-                </InputLabel>
-
-                <Select
-                  labelId="championship-status-label"
-                  value={form.status}
-                  label="Status"
-                  onChange={(event) =>
-                    handleChange(
-                      "status",
-                      event.target.value as ChampionshipStatus
-                    )
-                  }
-                >
-                  <MenuItem value="AGENDADO">
-                    Agendado
-                  </MenuItem>
-
-                  <MenuItem value="EM_ANDAMENTO">
-                    Em andamento
-                  </MenuItem>
-
-                  <MenuItem value="ENCERRADO">
-                    Encerrado
-                  </MenuItem>
-                </Select>
-              </FormControl>
-
-              <TextField
-                fullWidth
-                type="date"
-                label="Data de início"
-                value={form.startDate}
-                onChange={(event) =>
-                  handleChange("startDate", event.target.value)
-                }
-                slotProps={{
-                  inputLabel: {
-                    shrink: true,
-                  },
-                }}
-                sx={{ mb: 2 }}
-              />
-
-              <TextField
-                fullWidth
-                type="date"
-                label="Data de encerramento"
-                value={form.endDate}
-                onChange={(event) =>
-                  handleChange("endDate", event.target.value)
-                }
-                slotProps={{
-                  inputLabel: {
-                    shrink: true,
-                  },
-                }}
-                sx={{ mb: 2 }}
-              />
-
               <TextField
                 fullWidth
                 multiline
@@ -377,23 +263,6 @@ export default function ChampionshipsPage() {
                         Tipo: {typeLabels[championship.type]}
                       </Typography>
 
-                      <Typography
-                        variant="body2"
-                        sx={{ mt: 1 }}
-                      >
-                        Status: {statusLabels[championship.status]}
-                      </Typography>
-
-                      <Typography
-                        variant="body2"
-                        sx={{ mt: 1 }}
-                      >
-                        Período:{" "}
-                        {formatDate(championship.startDate)}
-                        {" até "}
-                        {formatDate(championship.endDate)}
-                      </Typography>
-
                       {championship.description && (
                         <Typography
                           variant="body2"
@@ -403,6 +272,18 @@ export default function ChampionshipsPage() {
                           {championship.description}
                         </Typography>
                       )}
+
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          mt: 1,
+                          color: "success.main",
+                        }}
+                      >
+                        {championship.active
+                          ? "Ativo"
+                          : "Inativo"}
+                      </Typography>
 
                       <Button
                         size="small"
