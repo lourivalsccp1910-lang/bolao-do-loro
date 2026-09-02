@@ -12,6 +12,7 @@ import {
   FaChartPie,
   FaUsers,
   FaTrophy,
+  FaShieldHalved,
   FaFutbol,
   FaClipboardList,
   FaRankingStar,
@@ -35,6 +36,11 @@ const menu = [
     text: "Campeonatos",
     icon: <FaTrophy />,
     path: "/campeonatos",
+  },
+  {
+    text: "Times",
+    icon: <FaShieldHalved />,
+    path: "/times",
   },
   {
     text: "Jogos",
@@ -134,3 +140,5 @@ export default function Sidebar({
     </Box>
   );
 }
+
+
