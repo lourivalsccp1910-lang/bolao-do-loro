@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Button,
@@ -30,11 +30,6 @@ import { listChampionships } from "../../championships/services/championship.ser
 
 import type { Championship } from "../../championships/types/championship.types";
 
-import { listTeams } from "../../teams/services/team.service";
-import type { Team } from "../../teams/types/team.types";
-
-import { listTeamsByChampionship } from "../../championshipTeams/services/championshipTeam.service";
-
 const emptyForm: GameFormData = {
   championshipId: "",
   homeTeam: "",
@@ -45,7 +40,6 @@ const emptyForm: GameFormData = {
 export default function GamesPage() {
   const [games, setGames] = useState<Game[]>([]);
   const [championships, setChampionships] = useState<Championship[]>([]);
-  const [teams, setTeams] = useState<Team[]>([]);
   const [form, setForm] = useState<GameFormData>(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -56,15 +50,7 @@ export default function GamesPage() {
   useEffect(() => {
     setGames(listGames());
     setChampionships(listChampionships());
-    setTeams(listTeams().filter((team) => team.status === "ATIVO"));
   }, []);
-
-  function getAvailableTeams(championshipId: string): Team[] {
-    const relations = listTeamsByChampionship(championshipId);
-    const relationTeamIds = relations.map((relation) => relation.teamId);
-
-    return teams.filter((team) => relationTeamIds.includes(team.id));
-  }
 
   function handleChange(
     field: keyof GameFormData,
@@ -93,7 +79,7 @@ export default function GamesPage() {
     }
 
     if (!form.matchDate) {
-      alert("Informe a data e horÃ¡rio do jogo.");
+      alert("Informe a data e horário do jogo.");
       return;
     }
 
@@ -159,7 +145,7 @@ export default function GamesPage() {
     }
 
     if (homeScore < 0 || awayScore < 0) {
-      alert("O placar nÃ£o pode ser negativo.");
+      alert("O placar não pode ser negativo.");
       return;
     }
 
@@ -188,7 +174,7 @@ export default function GamesPage() {
       (item) => item.id === championshipId
     );
 
-    return championship?.name ?? "Campeonato nÃ£o encontrado";
+    return championship?.name ?? "Campeonato não encontrado";
   }
 
   return (
@@ -215,7 +201,7 @@ export default function GamesPage() {
 
       {championships.length === 0 && (
         <Alert severity="info" sx={{ mb: 3 }}>
-          Ainda nÃ£o existe nenhum campeonato cadastrado.
+          Ainda não existe nenhum campeonato cadastrado.
           Cadastre um campeonato antes de adicionar jogos.
         </Alert>
       )}
@@ -267,44 +253,36 @@ export default function GamesPage() {
                 </Select>
               </FormControl>
 
-              <FormControl fullWidth sx={{ mb: 2 }} disabled={!form.championshipId}>
-                <InputLabel id="home-team-label">Time da casa</InputLabel>
-                <Select
-                  labelId="home-team-label"
-                  value={form.homeTeam}
-                  label="Time da casa"
-                  onChange={(event) => handleChange("homeTeam", event.target.value)}
-                >
-                  <MenuItem value="">Selecione o time da casa</MenuItem>
-                  {getAvailableTeams(form.championshipId).map((team) => (
-                    <MenuItem key={team.id} value={team.name}>
-                      {team.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <TextField
+                fullWidth
+                label="Time da casa"
+                value={form.homeTeam}
+                onChange={(event) =>
+                  handleChange(
+                    "homeTeam",
+                    event.target.value
+                  )
+                }
+                sx={{ mb: 2 }}
+              />
 
-              <FormControl fullWidth sx={{ mb: 2 }} disabled={!form.championshipId}>
-                <InputLabel id="away-team-label">Time visitante</InputLabel>
-                <Select
-                  labelId="away-team-label"
-                  value={form.awayTeam}
-                  label="Time visitante"
-                  onChange={(event) => handleChange("awayTeam", event.target.value)}
-                >
-                  <MenuItem value="">Selecione o time visitante</MenuItem>
-                  {getAvailableTeams(form.championshipId).map((team) => (
-                    <MenuItem key={team.id} value={team.name}>
-                      {team.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <TextField
+                fullWidth
+                label="Time visitante"
+                value={form.awayTeam}
+                onChange={(event) =>
+                  handleChange(
+                    "awayTeam",
+                    event.target.value
+                  )
+                }
+                sx={{ mb: 2 }}
+              />
 
               <TextField
                 fullWidth
                 type="datetime-local"
-                label="Data e horÃ¡rio"
+                label="Data e horário"
                 value={form.matchDate}
                 onChange={(event) =>
                   handleChange(
@@ -325,7 +303,7 @@ export default function GamesPage() {
                 sx={{ mr: 1 }}
               >
                 {editingId
-                  ? "SALVAR ALTERAÃ‡Ã•ES"
+                  ? "SALVAR ALTERAÇÕES"
                   : "CADASTRAR"}
               </Button>
 
@@ -382,7 +360,7 @@ export default function GamesPage() {
                           mt: 1,
                         }}
                       >
-                        {game.homeTeam} Ã— {game.awayTeam}
+                        {game.homeTeam} × {game.awayTeam}
                       </Typography>
 
                       <Typography
@@ -419,7 +397,7 @@ export default function GamesPage() {
                             }}
                           >
                             Resultado:{" "}
-                            {game.homeScore} Ã—{" "}
+                            {game.homeScore} ×{" "}
                             {game.awayScore}
                           </Typography>
                         )}
@@ -439,7 +417,7 @@ export default function GamesPage() {
                               mb: 2,
                             }}
                           >
-                            LanÃ§ar resultado
+                            Lançar resultado
                           </Typography>
 
                           <Grid
@@ -471,7 +449,7 @@ export default function GamesPage() {
                                 align="center"
                                 variant="h6"
                               >
-                                Ã—
+                                ×
                               </Typography>
                             </Grid>
 
@@ -528,7 +506,7 @@ export default function GamesPage() {
                         >
                           {game.status === "FINALIZADO"
                             ? "EDITAR RESULTADO"
-                            : "LANÃ‡AR RESULTADO"}
+                            : "LANÇAR RESULTADO"}
                         </Button>
                       )}
 
@@ -568,17 +546,3 @@ export default function GamesPage() {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
