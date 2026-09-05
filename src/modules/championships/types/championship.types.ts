@@ -22,9 +22,12 @@ export interface Championship {
 
 export interface ChampionshipFormData {
   name: string;
-  type: ChampionshipType;
+  type: ChampionshipType | "";
   description: string;
   status: ChampionshipStatus;
   startDate: string;
   endDate: string;
 }
+
+
+

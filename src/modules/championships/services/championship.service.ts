@@ -76,7 +76,7 @@ export function createChampionship(
   const championship: Championship = {
     id: generateId(),
     name: data.name,
-    type: data.type,
+    type: data.type as Championship["type"],
     description: data.description,
     status: data.status,
     startDate: data.startDate,
@@ -108,7 +108,7 @@ export function updateChampionship(
   const updatedChampionship: Championship = {
     ...championships[index],
     name: data.name,
-    type: data.type,
+    type: data.type as Championship["type"],
     description: data.description,
     status: data.status,
     startDate: data.startDate,
@@ -167,3 +167,4 @@ export function deleteChampionship(id: string): boolean {
 
   return true;
 }
+
